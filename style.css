@@ -1,16 +1,17 @@
 :root {
     /* Colors */
-    --primary-color: #0A0E27;
-    --secondary-color: #1E2749;
-    --accent-color: #6C63FF;
-    --accent-hover: #5548E8;
-    --text-primary: #FFFFFF;
-    --text-secondary: #B4B4C8;
-    --text-dark: #0A0E27;
-    --background-light: #F8F9FA;
+    --primary-color: #0B0A09;
+    --secondary-color: #1C1917;
+    --accent-color: #D97706;
+    --accent-hover: #B45309;
+    --text-primary: #FAFAF9;
+    --text-secondary: #A8A29E;
+    --text-dark: #0B0A09;
+    --background-light: #FAFAF9;
+    --background-muted: #E7E5E4;
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-primary: linear-gradient(135deg, #D97706 0%, #7C2D12 100%);
+    --gradient-secondary: linear-gradient(135deg, #0B0A09 0%, #000000 100%);
     /* Fonts */
     --font-primary: 'Montserrat', sans-serif;
     --font-secondary: 'Playfair Display', serif;
@@ -123,16 +124,16 @@ nav {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(10, 14, 39, 0.95);
+    /* background: rgba(10, 14, 39, 0.95); */
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: 12px 40px;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -300,11 +301,11 @@ nav {
 
 .floating-stats {
     position: absolute;
-    bottom: 40px;
-    left: 40px;
+    top: 24px;
+    right: 24px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 24px 32px;
+    padding: 20px 28px;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 2;
@@ -321,7 +322,7 @@ nav {
 .stat-number {
     font-size: 32px;
     font-weight: 800;
-    background: var(--gradient-primary);
+    background: var(--secondary-color);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -330,7 +331,8 @@ nav {
 
 .stat-label {
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--accent-color);
+    font-weight: 700;
 }
 
 /* About Section */
