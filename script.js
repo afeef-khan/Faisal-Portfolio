@@ -215,3 +215,39 @@ document.querySelectorAll('.btn-secondary').forEach(btn => {
         }
     });
 });
+
+// SCROLL ANIMATIONS - Minimal & Clean
+
+const initScrollAnimations = () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      } else {
+        entry.target.classList.remove('in-view');
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  // Observe all animation elements
+  const animatedElements = document.querySelectorAll(`
+    .animate-fade,
+    .animate-slide-left,
+    .animate-slide-right,
+    .animate-scale,
+    .animate-card,
+    .animate-image,
+    .animate-zoom,
+    .animate-blur,
+    .animate-rotate,
+    .animate-flip
+  `);
+
+  animatedElements.forEach(el => observer.observe(el));
+};
+
+// Initialize animations
+initScrollAnimations();
