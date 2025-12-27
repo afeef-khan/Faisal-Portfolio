@@ -62,29 +62,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Form submission handling
-const contactForm = document.querySelector('.contact-form form');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        // Get form values
-        const formData = {
-            name: contactForm.querySelector('input[type="text"]').value,
-            email: contactForm.querySelector('input[type="email"]').value,
-            subject: contactForm.querySelectorAll('input[type="text"]')[1].value,
-            message: contactForm.querySelector('textarea').value
-        };
-
-        // Here you can add your form submission logic
-        // For now, just show an alert
-        alert('Thank you for your message! I will get back to you soon.');
-
-        // Reset form
-        contactForm.reset();
-    });
-}
-
 // Active navigation link on scroll
 const sections = document.querySelectorAll('section[id]');
 const navLinksAll = document.querySelectorAll('.nav-links a');
@@ -107,15 +84,83 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Horizontal scroll with mouse wheel for projects
-const horizontalScroll = document.querySelector('.horizontal-scroll-wrapper');
-if (horizontalScroll) {
-    horizontalScroll.addEventListener('wheel', (e) => {
-        if (e.deltaY !== 0) {
-            e.preventDefault();
-            horizontalScroll.scrollLeft += e.deltaY;
-        }
+// Projects Slider
+const initProjectsSlider = () => {
+    const slides = document.querySelectorAll('.project-slide');
+    const dotsContainer = document.querySelector('.slider-dots');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+
+    let currentSlide = 0;
+
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('slider-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
     });
+
+    const dots = document.querySelectorAll('.slider-dot');
+
+    const updateSlider = () => {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
+
+            if (index === currentSlide) {
+                slide.classList.add('active');
+            } else if (index < currentSlide) {
+                slide.classList.add('prev');
+            }
+        });
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    };
+
+    const goToSlide = (index) => {
+        currentSlide = index;
+        updateSlider();
+    };
+
+    const nextSlide = () => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlider();
+    };
+
+    const prevSlide = () => {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        updateSlider();
+    };
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    // Auto-play slider
+    let autoplayInterval = setInterval(nextSlide, 5000);
+
+    // Pause autoplay on hover
+    const sliderContainer = document.querySelector('.projects-slider-container');
+    sliderContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoplayInterval);
+    });
+
+    sliderContainer.addEventListener('mouseleave', () => {
+        autoplayInterval = setInterval(nextSlide, 5000);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+    });
+};
+
+// Initialize slider when DOM is loaded
+if (document.querySelector('.projects-slider')) {
+    initProjectsSlider();
 }
 
 // Counter animation for stats

@@ -457,6 +457,7 @@ nav {
 #projects {
     padding: var(--spacing-xxl) 0;
     background: var(--primary-color);
+    overflow: hidden;
 }
 
 .projects-header {
@@ -464,134 +465,197 @@ nav {
     margin-bottom: 80px;
 }
 
-.horizontal-scroll-wrapper {
-    overflow-x: auto;
-    overflow-y: hidden;
-    width: 100%;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) var(--secondary-color);
-}
-
-.horizontal-scroll-wrapper::-webkit-scrollbar {
-    height: 8px;
-}
-
-.horizontal-scroll-wrapper::-webkit-scrollbar-track {
-    background: var(--secondary-color);
-}
-
-.horizontal-scroll-wrapper::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
-    border-radius: 4px;
-}
-
-.projects-scroll {
-    display: flex;
-    gap: 40px;
-    padding: 40px;
-    width: max-content;
-}
-
-.project-card {
-    width: 500px;
-    background: var(--secondary-color);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: var(--transition-base);
+.projects-slider-container {
     position: relative;
-    flex-shrink: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 80px;
 }
 
-.project-card:hover {
-    transform: translateY(-8px);
+.projects-slider {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    perspective: 1000px;
+}
+
+.project-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    background: var(--secondary-color);
+    border-radius: 24px;
+    overflow: hidden;
+    padding: 40px;
     box-shadow: var(--shadow-lg);
 }
 
-.project-image {
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    position: relative;
+.project-slide.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: all;
+    z-index: 10;
 }
 
-.project-image img {
+.project-slide.prev {
+    transform: translateX(-100%) scale(0.9);
+    opacity: 0;
+}
+
+.project-slide-image {
+    position: relative;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.project-slide-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: var(--transition-base);
 }
 
-.project-card:hover .project-image img {
+.project-slide:hover .project-slide-image img {
     transform: scale(1.05);
 }
 
-.project-overlay {
+.project-slide-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 14, 39, 0.8);
+    background: rgba(11, 10, 9, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
     opacity: 0;
     transition: var(--transition-base);
 }
 
-.project-card:hover .project-overlay {
+.project-slide:hover .project-slide-overlay {
     opacity: 1;
 }
 
-.project-link {
-    width: 48px;
-    height: 48px;
+.project-slide-link {
+    width: 64px;
+    height: 64px;
     background: var(--accent-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-primary);
-    font-size: 20px;
+    font-size: 24px;
     transition: var(--transition-base);
 }
 
-.project-link:hover {
+.project-slide-link:hover {
     background: var(--accent-hover);
+    transform: scale(1.15) rotate(360deg);
+}
+
+.project-slide-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.project-slide-tag {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 20px;
+    background: rgba(217, 119, 6, 0.2);
+    color: var(--accent-color);
+    border-radius: 24px;
+    margin-bottom: 24px;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.project-slide-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.project-slide-description {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+/* Slider Controls */
+.slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.slider-btn {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: var(--text-primary);
+    font-size: 20px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-btn:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
     transform: scale(1.1);
 }
 
-.project-content {
-    padding: 32px;
-}
-
-.project-tags {
+.slider-dots {
     display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.project-tag {
-    font-size: 12px;
-    padding: 6px 12px;
-    background: rgba(108, 99, 255, 0.2);
-    color: var(--accent-color);
+.slider-dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.slider-dot.active {
+    background: var(--accent-color);
+    width: 40px;
     border-radius: 6px;
-    font-weight: 600;
 }
 
-.project-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.project-description {
-    font-size: 16px;
-    color: var(--text-secondary);
-    margin-bottom: 0;
+.slider-dot:hover {
+    background: var(--accent-color);
 }
 
 /* Experience Section */
@@ -1009,6 +1073,36 @@ footer {
         height: 400px;
     }
 
+    .projects-slider-container {
+        padding: 0 60px;
+    }
+
+    .projects-slider {
+        height: 700px;
+    }
+
+    .project-slide {
+        grid-template-columns: 1fr;
+        padding: 32px;
+        gap: 32px;
+    }
+
+    .project-slide-image {
+        height: 350px;
+    }
+
+    .project-slide-content {
+        padding: 20px;
+    }
+
+    .project-slide-title {
+        font-size: 36px;
+    }
+
+    .project-slide-description {
+        font-size: 16px;
+    }
+
     .contact-content {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -1156,29 +1250,43 @@ footer {
         gap: 20px;
     }
 
-    .projects-scroll {
+    .projects-slider-container {
+        padding: 0 20px;
+    }
+
+    .projects-slider {
+        height: 650px;
+    }
+
+    .project-slide {
         padding: 24px;
+    }
+
+    .project-slide-image {
+        height: 280px;
+    }
+
+    .project-slide-content {
+        padding: 16px;
+    }
+
+    .project-slide-title {
+        font-size: 28px;
+    }
+
+    .project-slide-description {
+        font-size: 15px;
+    }
+
+    .slider-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 18px;
+    }
+
+    .slider-controls {
         gap: 24px;
-    }
-
-    .project-card {
-        width: 350px;
-    }
-
-    .project-image {
-        height: 250px;
-    }
-
-    .project-content {
-        padding: 24px;
-    }
-
-    .project-title {
-        font-size: 20px;
-    }
-
-    .project-description {
-        font-size: 14px;
+        margin-top: 40px;
     }
 
     .timeline-content {
@@ -1304,20 +1412,34 @@ footer {
         height: 300px;
     }
 
-    .projects-scroll {
+    .projects-slider {
+        height: 700px;
+    }
+
+    .project-slide {
         padding: 20px;
     }
 
-    .project-card {
-        width: 300px;
+    .project-slide-image {
+        height: 240px;
     }
 
-    .project-image {
-        height: 200px;
+    .project-slide-title {
+        font-size: 24px;
     }
 
-    .project-content {
-        padding: 20px;
+    .project-slide-description {
+        font-size: 14px;
+    }
+
+    .slider-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+    }
+
+    .slider-controls {
+        gap: 20px;
     }
 
     .timeline-content {
