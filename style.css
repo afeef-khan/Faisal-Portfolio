@@ -176,6 +176,44 @@ nav {
     width: 100%;
 }
 
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger span {
+    width: 28px;
+    height: 3px;
+    background: var(--text-primary);
+    transition: var(--transition-base);
+    border-radius: 3px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
+/* Active navigation link */
+.nav-links a.active-link {
+    color: var(--accent-color);
+}
+
+.nav-links a.active-link::after {
+    width: 100%;
+}
+
 /* Hero Section */
 #hero {
     min-height: 100vh;
@@ -1029,21 +1067,7 @@ footer {
         padding: 0 24px;
     }
 
-    .nav-container {
-        padding: 12px 24px;
-    }
-
-    .nav-links {
-        gap: 24px;
-    }
-
-    .nav-links a {
-        font-size: 12px;
-    }
-
-    /*  */
-    
-     .hamburger {
+    .hamburger {
         display: flex;
     }
 
@@ -1075,8 +1099,6 @@ footer {
         overflow: hidden;
     }
 
-
-    /*  */
     .hero-content {
         padding: 80px 0;
     }
@@ -1336,43 +1358,4 @@ footer {
         height: 36px;
         font-size: 14px;
     }
-}
-
-/*  */
-/* Hamburger Menu */
-.hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.hamburger span {
-    width: 28px;
-    height: 3px;
-    background: var(--text-primary);
-    transition: var(--transition-base);
-    border-radius: 3px;
-}
-
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
-}
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(8px, -8px);
-}
-
-/* Active navigation link */
-.nav-links a.active-link {
-    color: var(--accent-color);
-}
-
-.nav-links a.active-link::after {
-    width: 100%;
 }
